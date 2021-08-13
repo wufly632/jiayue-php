@@ -1009,16 +1009,16 @@
         },
         {
             "name": "hyperf-ext/hashing",
-            "version": "v2.2.1",
+            "version": "v2.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hyperf-ext/hashing.git",
-                "reference": "2fcb4ce92c82322955223ea9900397035ed3ef2a"
+                "reference": "e3399ebcaa8242e36bae988533e7acdfd4a73c94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hyperf-ext/hashing/zipball/2fcb4ce92c82322955223ea9900397035ed3ef2a",
-                "reference": "2fcb4ce92c82322955223ea9900397035ed3ef2a",
+                "url": "https://api.github.com/repos/hyperf-ext/hashing/zipball/e3399ebcaa8242e36bae988533e7acdfd4a73c94",
+                "reference": "e3399ebcaa8242e36bae988533e7acdfd4a73c94",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1028,15 +1028,14 @@
                 ]
             },
             "require": {
-                "ext-swoole": ">=4.5",
-                "hyperf/config": "~2.2.0",
-                "hyperf/di": "~2.2.0",
-                "hyperf/framework": "~2.2.0",
+                "hyperf/config": "^2.1",
+                "hyperf/di": "^2.1",
+                "hyperf/framework": "^2.1",
                 "php": ">=7.3"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.0",
-                "hyperf/testing": "~2.2.0",
+                "hyperf/testing": "^2.1",
                 "phpstan/phpstan": "^0.12",
                 "swoole/ide-helper": "dev-master"
             },
@@ -1073,22 +1072,22 @@
             ],
             "support": {
                 "issues": "https://github.com/hyperf-ext/hashing/issues",
-                "source": "https://github.com/hyperf-ext/hashing/tree/v2.2.1"
+                "source": "https://github.com/hyperf-ext/hashing/tree/v2.2.2"
             },
-            "time": "2021-07-31T09:13:23+00:00"
+            "time": "2021-08-11T19:10:50+00:00"
         },
         {
             "name": "hyperf-ext/jwt",
-            "version": "v2.2.0",
+            "version": "v2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hyperf-ext/jwt.git",
-                "reference": "5dae39c9fdf0b32561f4fa236887b60df41a2181"
+                "reference": "ef9d8938e4a1838632202a33b0f4e2ab01146769"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hyperf-ext/jwt/zipball/5dae39c9fdf0b32561f4fa236887b60df41a2181",
-                "reference": "5dae39c9fdf0b32561f4fa236887b60df41a2181",
+                "url": "https://api.github.com/repos/hyperf-ext/jwt/zipball/ef9d8938e4a1838632202a33b0f4e2ab01146769",
+                "reference": "ef9d8938e4a1838632202a33b0f4e2ab01146769",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1101,18 +1100,18 @@
                 "ext-json": "*",
                 "ext-openssl": "*",
                 "ext-swoole": ">=4.5",
-                "hyperf/cache": "~2.2.0",
-                "hyperf/command": "~2.2.0",
-                "hyperf/config": "~2.2.0",
-                "hyperf/di": "~2.2.0",
-                "hyperf/framework": "~2.2.0",
+                "hyperf/cache": "^2.1",
+                "hyperf/command": "^2.1",
+                "hyperf/config": "^2.1",
+                "hyperf/di": "^2.1",
+                "hyperf/framework": "^2.1",
                 "lcobucci/jwt": "~4.1.0",
                 "nesbot/carbon": "^2.0",
                 "php": ">=7.3"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.0",
-                "hyperf/testing": "~2.2.0",
+                "hyperf/testing": "^2.1",
                 "mockery/mockery": "^1.0",
                 "phpstan/phpstan": "^0.12",
                 "swoole/ide-helper": "dev-master"
@@ -1153,9 +1152,9 @@
             ],
             "support": {
                 "issues": "https://github.com/hyperf-ext/jwt/issues",
-                "source": "https://github.com/hyperf-ext/jwt/tree/v2.2.0"
+                "source": "https://github.com/hyperf-ext/jwt/tree/v2.2.1"
             },
-            "time": "2021-07-30T18:04:46+00:00"
+            "time": "2021-08-11T19:13:25+00:00"
         },
         {
             "name": "hyperf/async-queue",
@@ -3707,16 +3706,16 @@
         },
         {
             "name": "palmbuy/hyperf-request-response-middleware",
-            "version": "1.1",
+            "version": "1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SongTopic/hyperf-request-response-middleware.git",
-                "reference": "38e17f27768d161ceb9257b0f3bab22fc07cb516"
+                "reference": "8d6443c24366cbbf8b86b390aa0fc1c75a3249ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SongTopic/hyperf-request-response-middleware/zipball/38e17f27768d161ceb9257b0f3bab22fc07cb516",
-                "reference": "38e17f27768d161ceb9257b0f3bab22fc07cb516",
+                "url": "https://api.github.com/repos/SongTopic/hyperf-request-response-middleware/zipball/8d6443c24366cbbf8b86b390aa0fc1c75a3249ee",
+                "reference": "8d6443c24366cbbf8b86b390aa0fc1c75a3249ee",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3726,7 +3725,7 @@
                 ]
             },
             "require": {
-                "palmbuy/hyperf-logstash": "^1.0",
+                "palmbuy/hyperf-logstash": "~1.1",
                 "php": ">=5.5.9"
             },
             "type": "package",
@@ -3750,9 +3749,9 @@
             "description": "A middleware that records request and response data",
             "support": {
                 "issues": "https://github.com/SongTopic/hyperf-request-response-middleware/issues",
-                "source": "https://github.com/SongTopic/hyperf-request-response-middleware/tree/1.1"
+                "source": "https://github.com/SongTopic/hyperf-request-response-middleware/tree/1.2"
             },
-            "time": "2021-08-11T09:30:42+00:00"
+            "time": "2021-08-13T01:51:14+00:00"
         },
         {
             "name": "php-di/phpdoc-reader",
