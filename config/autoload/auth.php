@@ -52,6 +52,12 @@ return [
             'provider' => 'users',
             'options' => [],
         ],
+
+        'backend' => [
+            'driver' => \HyperfExt\Auth\Guards\JwtGuard::class,
+            'provider' => 'backend_users',
+            'options' => [],
+        ],
     ],
 
     /*
@@ -86,6 +92,14 @@ return [
         //         'hash_driver' => 'bcrypt',
         //     ],
         // ],
+
+        'backend_users' => [
+            'driver' => \HyperfExt\Auth\UserProviders\ModelUserProvider::class,
+            'options' => [
+                'model' => App\Model\BackendUser::class,
+                'hash_driver' => 'bcrypt',
+            ],
+        ],
     ],
 
     /*

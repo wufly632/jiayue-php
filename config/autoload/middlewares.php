@@ -14,6 +14,7 @@ use Palmbuy\Log\RequestAndResponseLog;
 
 return [
     'http' => [
-        RequestAndResponseLog::class
+        RequestAndResponseLog::class,
+        \Hyperf\Validation\Middleware\ValidationMiddleware::class
     ],
 ];

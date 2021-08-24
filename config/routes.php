@@ -10,8 +10,19 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 
+use App\Controller\Appearance\AppearanceController;
+use App\Controller\Backend\FileController;
+use App\Controller\Cases\CaseController;
+use App\Controller\Material\MaterialController;
+use App\Controller\News\NewsController;
+use App\Controller\Product\ProductController;
+use App\Controller\Product\StyleController;
+use App\Controller\Product\TypesController;
+use App\Controller\Serving\ServingController;
+use App\Controller\User\UserController;
 use App\Middleware\RefreshTokenMiddleware;
 use Hyperf\HttpServer\Router\Router;
+use App\Controller\Backend\UserController as BackendUserController;
 
 Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\IndexController@index');
 
@@ -19,10 +30,78 @@ Router::get('/favicon.ico', function () {
     return '';
 });
 
-Router::addGroup('/user/',function (){
-    Router::post('login',[\App\Controller\UserController::class,'login']);
-    Router::post('testException',[\App\Controller\UserController::class,'testException']);
+Router::addGroup('/api', function (){
+    Router::addGroup('/user/',function (){
+        Router::post('register', [UserController::class, 'register']);
+        Router::post('login',[UserController::class,'login']);
+        Router::post('testException',[UserController::class,'testException']);
+    });
+    Router::addGroup('/user/',function (){
+        Router::post('info',[UserController::class,'info']);
+    },['middleware' => [RefreshTokenMiddleware::class]]);
+
+    Router::addGroup('/news', function () {
+        Router::get('/list', [NewsController::class, 'index']);
+        Router::get('/detail/{id:\d+}', [NewsController::class, 'detail']);
+    });
+
+    Router::addGroup('/product', function () {
+        Router::get('/style', [StyleController::class, 'index']);
+        Router::get('/list', [ProductController::class, 'index']);
+        Router::get('/detail/{id}', [ProductController::class, 'detail']);
+
+        Router::get('/types', [TypesController::class, 'index']);
+        Router::post('/types/save', [TypesController::class, 'save']);
+    });
+
+    Router::addGroup('/appearance', function () {
+        Router::get('/list', [AppearanceController::class, 'index']);
+        Router::get('/detail/{id:\d+}', [AppearanceController::class, 'detail']);
+    });
+
+    Router::addGroup('/serving', function (){
+        Router::get('/list', [ServingController::class, 'index']);
+        Router::get('/detail/{id:\d+}', [ServingController::class, 'detail']);
+    });
+
+    Router::addGroup('/material', function (){
+        Router::get('/list', [MaterialController::class, 'index']);
+    });
+
+    Router::addGroup('/case', function (){
+        Router::get('/list', [CaseController::class, 'index']);
+        Router::get('/detail/{id:\d+}', [CaseController::class, 'detail']);
+    });
 });
-Router::addGroup('/user/',function (){
-    Router::post('info',[\App\Controller\UserController::class,'info']);
-},['middleware' => [RefreshTokenMiddleware::class]]);
+
+
+Router::addGroup('/api/backend', function (){
+    Router::post('/login',[BackendUserController::class,'login']);
+
+    Router::post('/picture/upload', [FileController::class, 'pictureUpload']);
+
+    Router::addGroup('/product', function () {
+        Router::post('/save', [ProductController::class, 'save']);
+        Router::get('/list', [ProductController::class, 'list']);
+        Router::get('/detail/{id}', [ProductController::class, 'detail']);
+        Router::get('/style', [StyleController::class, 'index']);
+        Router::post('/style/save', [StyleController::class, 'save']);
+        Router::post('/style/onoffline', [StyleController::class, 'onOffline']);
+
+        Router::get('/types', [TypesController::class, 'index']);
+        Router::post('/types/save', [TypesController::class, 'save']);
+        Router::post('/types/onoffline', [TypesController::class, 'onOffline']);
+    });
+
+    Router::addGroup('/news', function () {
+        Router::get('/list', [NewsController::class, 'index']);
+        Router::get('/detail/{id:\d+}', [NewsController::class, 'detail']);
+        Router::post('/save', [NewsController::class, 'save']);
+    });
+
+    Router::addGroup('/appearance', function () {
+        Router::get('/list', [AppearanceController::class, 'index']);
+        Router::get('/detail/{id:\d+}', [AppearanceController::class, 'detail']);
+        Router::post('/save', [AppearanceController::class, 'save']);
+    });
+});

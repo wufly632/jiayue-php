@@ -13,9 +13,10 @@ class Status
     /**
      * API状态：Success
      */
-    const SUCCESS = '10000|Success';
+    const SUCCESS = '20000|Success';
 
     const UNAUTHORIZED = '40100|Unauthorized';
+    const UNFOUND = '40400|Unfound';
 
     /**
      * API状态：HTTP状态码
@@ -78,6 +79,8 @@ class Status
      */
     const ERR_FINANCE = '66005|财务操作失败';
 
+    const ERR_SYSTEM = '50000|系统出错';
+
 
     /**
      * @var int $code
@@ -128,22 +131,22 @@ class Status
     {
         // 若自定义msg不为空，则返回自定义msg
         if (!empty($msg)) {
-            return __('messages.'.$msg);
+            return __($msg);
         }
 
         $msg = strstr($statusStr, '|', false);
         if ($msg === false) {
             // 状态格式不规范，则返回默认系统错误消息
-            return (string)__('messages.'.ltrim(strstr(self::ERR_SYS, '|', false), '|'));
+            return (string)__(ltrim(strstr(self::ERR_SYS, '|', false), '|'));
         }
         $msg = ltrim($msg, '|');
         if (empty($msg)) {
             // 状态消息为空，则返回默认系统错误消息
-            return (string)__('messages.'.ltrim(strstr(self::ERR_SYS, '|', false), '|'));
+            return (string)__(ltrim(strstr(self::ERR_SYS, '|', false), '|'));
         }
 
         // 返回已定义的的状态消息
-        return (string)__('messages.'.$msg);
+        return (string)__($msg);
     }
 
     /**

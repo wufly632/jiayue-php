@@ -1,24 +1,15 @@
 <?php
 
-declare (strict_types=1);
+
 namespace App\Model;
+
 
 use Hyperf\ModelCache\Cacheable;
 use HyperfExt\Auth\Authenticatable;
 use HyperfExt\Auth\Contracts\AuthenticatableInterface;
 use HyperfExt\Jwt\Contracts\JwtSubjectInterface;
 
-/**
- * @property int $id
- * @property string $name
- * @property string $email
- * @property string $email_verified_at
- * @property string $password
- * @property string $remember_token
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- */
-class User extends Model implements AuthenticatableInterface,JwtSubjectInterface
+class BackendUser extends Model implements AuthenticatableInterface,JwtSubjectInterface
 {
     use Authenticatable, Cacheable;
     /**
@@ -26,7 +17,7 @@ class User extends Model implements AuthenticatableInterface,JwtSubjectInterface
      *
      * @var string
      */
-    protected $table = 'users';
+    protected $table = 'backend_users';
     /**
      * The attributes that are mass assignable.
      *
