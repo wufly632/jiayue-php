@@ -41,6 +41,7 @@ class AppExceptionHandler extends ExceptionHandler
 //        return $response->withHeader('Server', 'Hyperf')->withStatus(500)->withBody(new SwooleStream('Internal Server Error.'));
         // 阻止异常冒泡
         $this->stopPropagation();
+        var_dump(request()->getPathInfo());
         if (env('app_env') != 'local'){
             StdoutLogger::error(
                 sprintf(
