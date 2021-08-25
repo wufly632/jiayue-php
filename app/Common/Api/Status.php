@@ -81,6 +81,8 @@ class Status
 
     const ERR_SYSTEM = '50000|系统出错';
 
+    const ERR_PARAM_VALIDAE= '80000|参数有误';
+
 
     /**
      * @var int $code

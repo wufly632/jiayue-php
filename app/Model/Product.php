@@ -5,9 +5,11 @@ namespace App\Model;
 
 
 use Carbon\Carbon;
+use Hyperf\Database\Model\SoftDeletes;
 
 class Product extends Model
 {
+    use SoftDeletes;
     /**
      * The table associated with the model.
      *

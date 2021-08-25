@@ -18,7 +18,7 @@ class FileController extends AbstractController
         $filename = time() . '_' . Str::random(10) . '.' . $extension;
         // Write Files
         $fileStorage->write($filename, file_get_contents($file->getRealPath()));
-        $url = 'http://localhost:9553/' . $filename;
+        $url = 'http://localhost:9554/' . $filename;
         return $this->response->apiSuccess(['url' => $url]);
     }
 }

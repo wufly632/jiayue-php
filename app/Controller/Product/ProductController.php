@@ -18,7 +18,6 @@ use App\Request\ProductRequest;
 use App\Services\ProductService;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
-use Hyperf\Utils\Str;
 
 class ProductController extends AbstractController
 {
@@ -97,12 +96,26 @@ class ProductController extends AbstractController
             'typeId' => $productInfo->product_type_id,
             'productModel' => $productInfo->product_model,
             'pictures' => json_decode($productInfo->pictures),
-            'sizes' => $productInfo->sizes->pluck('name')->toArray(),
+            'detailPictures' => json_decode($productInfo->detail_pictures),
+            'materialChangeAble' => (bool) $productInfo->material_change_able,
             'hasFollowed' => false,
         ];
         if (auth()->id()) {
             $data['hasFollowed'] = $this->service->hasFollowed(auth()->id(), $id);
         }
         return $this->response->apiSuccess($data);
+    }
+
+    public function delete(RequestInterface $request)
+    {
+        $id = $request->input('id');
+        $product = $this->service->find($id);
+        if (!$product) {
+            return $this->response->apiError(new Status(Status::UNFOUND));
+        }
+        if ($product->delete()) {
+            return $this->response->apiSuccess();
+        }
+        return $this->response->apiError(new Status(Status::ERR_SYS));
     }
 }

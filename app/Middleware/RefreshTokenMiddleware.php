@@ -21,6 +21,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use stdClass;
+
 class RefreshTokenMiddleware implements MiddlewareInterface
 {
 //    use ApiResponseTrait;
@@ -61,10 +63,11 @@ class RefreshTokenMiddleware implements MiddlewareInterface
             $jwt->checkOrFail();
         } catch (Exception $exception) {
             if (! $exception instanceof TokenExpiredException) {
-                return $this->response->withStatus(401)->withAddedHeader('content-type', 'application/json')
+                return $this->response->withStatus(200)->withAddedHeader('content-type', 'application/json')
                     ->withBody(new SwooleStream(Json::encode([
                         'code'=>40100,
                         'msg'=>$exception->getMessage(),
+                        'data' => new stdClass(),
                     ])));
             }
             try {
@@ -84,10 +87,11 @@ class RefreshTokenMiddleware implements MiddlewareInterface
 
                 return $handler->handle($request)->withHeader('authorization', 'bearer ' . $new_token);
             } catch (Exception $exception) {
-                return $this->response->withStatus(401)->withAddedHeader('content-type', 'application/json')
+                return $this->response->withStatus(200)->withAddedHeader('content-type', 'application/json')
                     ->withBody(new SwooleStream(Json::encode([
                         'code'=>40100,
                         'msg'=>$exception->getMessage(),
+                        'data' => new stdClass(),
                     ])));
             }
         }

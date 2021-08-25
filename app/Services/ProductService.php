@@ -36,26 +36,14 @@ class ProductService
                 'product_model' => $request->input('productModel'),
                 'main_picture' => $request->input('pictures', []) ? Arr::first($request->input('pictures')) : '',
                 'pictures' => json_encode($request->input('pictures', [])),
+                'detail_pictures' => json_encode($request->input('detailPictures', [])),
+                'material_change_able' => $request->input('materialChangeAble', false),
             ];
             if (!$productId) {
                 $product = Product::query()->create($productInfo);
                 $productId = $product->id;
             } else {
                 Product::query()->where(['id' => $productId])->update($productInfo);
-                ProductSize::query()->where(['product_id' => $productId])->delete();
-            }
-            // 尺码信息  删除原来的，直接添加新的
-            $sizeInfos = [];
-            foreach ($request->input('sizes') as $size) {
-                $sizeInfos[] = [
-                    'product_id' => $productId,
-                    'name' => $size,
-                    'created_at' => Carbon::now()->toDateTimeString(),
-                    'updated_at' => Carbon::now()->toDateTimeString(),
-                ];
-            }
-            if (count($sizeInfos) > 0) {
-                ProductSize::query()->where(['product_id' => $productId])->insert($sizeInfos);
             }
             Db::commit();
             return true;
@@ -86,7 +74,7 @@ class ProductService
         return Product::query()->find($id);
     }
 
-    public function hasFollowed(int $userId, int $productId)
+    public function hasFollowed($userId, $productId)
     {
         return false; // TODO
     }

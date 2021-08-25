@@ -13,12 +13,14 @@ declare(strict_types=1);
 use App\Controller\Appearance\AppearanceController;
 use App\Controller\Backend\FileController;
 use App\Controller\Cases\CaseController;
+use App\Controller\Fave\FaveController;
 use App\Controller\Material\MaterialController;
 use App\Controller\News\NewsController;
 use App\Controller\Product\ProductController;
 use App\Controller\Product\StyleController;
 use App\Controller\Product\TypesController;
 use App\Controller\Serving\ServingController;
+use App\Controller\StaticPage\StaticPageController;
 use App\Controller\User\UserController;
 use App\Middleware\RefreshTokenMiddleware;
 use Hyperf\HttpServer\Router\Router;
@@ -69,20 +71,25 @@ Router::addGroup('/api', function (){
     });
 
     Router::addGroup('/case', function (){
-        Router::get('/list', [CaseController::class, 'index']);
-        Router::get('/detail/{id:\d+}', [CaseController::class, 'detail']);
+        Router::get('/info', [CaseController::class, 'info']);
     });
+
+    Router::addGroup('/fave', function () {
+        Router::get('/list', [FaveController::class, 'list']);
+        Router::get('/fave', [FaveController::class, 'fave']);
+    },['middleware' => [RefreshTokenMiddleware::class]]);
 });
 
 
+Router::post('/api/backend/login',[BackendUserController::class,'login']);
 Router::addGroup('/api/backend', function (){
-    Router::post('/login',[BackendUserController::class,'login']);
 
     Router::post('/picture/upload', [FileController::class, 'pictureUpload']);
 
     Router::addGroup('/product', function () {
         Router::post('/save', [ProductController::class, 'save']);
         Router::get('/list', [ProductController::class, 'list']);
+        Router::post('/delete', [ProductController::class, 'delete']);
         Router::get('/detail/{id}', [ProductController::class, 'detail']);
         Router::get('/style', [StyleController::class, 'index']);
         Router::post('/style/save', [StyleController::class, 'save']);
@@ -104,4 +111,27 @@ Router::addGroup('/api/backend', function (){
         Router::get('/detail/{id:\d+}', [AppearanceController::class, 'detail']);
         Router::post('/save', [AppearanceController::class, 'save']);
     });
-});
+
+    Router::addGroup('/fave', function () {
+        Router::get('/list', [FaveController::class, 'index']);
+    });
+
+    Router::addGroup('/case', function (){
+        Router::get('/list', [CaseController::class, 'index']);
+        Router::get('/detail/{id}', [CaseController::class, 'detail']);
+        Router::post('/save', [CaseController::class, 'save']);
+        Router::post('/delete', [CaseController::class, 'delete']);
+    });
+
+    Router::addGroup('', function (){
+        Router::get('/address/info', [StaticPageController::class, 'addressInfo']);
+        Router::post('/address/save', [StaticPageController::class, 'addressSave']);
+
+        Router::get('/about/info', [StaticPageController::class, 'aboutInfo']);
+        Router::post('/about/save', [StaticPageController::class, 'aboutSave']);
+
+        Router::get('/contact/info', [StaticPageController::class, 'contactInfo']);
+        Router::post('/contact/save', [StaticPageController::class, 'contactSave']);
+    });
+
+},['middleware' => [RefreshTokenMiddleware::class]]);

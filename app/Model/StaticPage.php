@@ -11,17 +11,14 @@ declare(strict_types=1);
  */
 namespace App\Model;
 
-use Hyperf\Database\Model\SoftDeletes;
-
-class ProductCase extends Model
+class StaticPage extends Model
 {
-    use SoftDeletes;
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'cases';
+    protected $table = 'static_pages';
 
     /**
      * The attributes that are mass assignable.

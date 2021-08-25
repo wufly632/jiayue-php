@@ -42,7 +42,7 @@ class AppExceptionHandler extends ExceptionHandler
         // 阻止异常冒泡
         $this->stopPropagation();
         var_dump(request()->getPathInfo());
-        if (env('app_env') != 'local'){
+        if (env('app_env') != 'local') {
             StdoutLogger::error(
                 sprintf(
                     "%s(%s): %s\n%s",
@@ -52,7 +52,7 @@ class AppExceptionHandler extends ExceptionHandler
                     $throwable->getTraceAsString()
                 )
             );
-        }else{
+        } else {
             Logstash::channel(get_class($throwable))->error(
                 sprintf(
                     "%s(%s): %s\n%s",
@@ -69,7 +69,7 @@ class AppExceptionHandler extends ExceptionHandler
          */
         $apiResponse = new Response($response);
 
-        return $apiResponse->apiError($throwable->status, $throwable->getData());
+        return $apiResponse->apiError($throwable->status, method_exists($throwable, 'getData') ? $throwable->getData() : $throwable->getTrace());
     }
 
     public function isValid(Throwable $throwable): bool
