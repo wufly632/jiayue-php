@@ -24,6 +24,6 @@ class WechatController extends AbstractController
         $response = $app->server->serve();
 
 // 将响应输出
-        $response->send();exit; // Laravel 里请使用：return $response;
+        return $response->send(); // Laravel 里请使用：return $response;
     }
 }
