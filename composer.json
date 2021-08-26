@@ -38,6 +38,7 @@
     "hyperf/snowflake": "^2.2",
     "hyperf/translation": "^2.2",
     "hyperf/validation": "^2.2",
+    "overtrue/wechat": "~5.0",
     "palmbuy/hyperf-logstash": "~1.1",
     "palmbuy/hyperf-request-response-middleware": "~1.2"
   },

@@ -32,6 +32,8 @@ Router::get('/favicon.ico', function () {
     return '';
 });
 
+Router::get('/test', [WechatController::class, 'test']);
+
 Router::addGroup('/api', function (){
     Router::addGroup('/user/',function (){
         Router::post('register', [UserController::class, 'register']);
