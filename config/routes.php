@@ -71,7 +71,16 @@ Router::addGroup('/api', function (){
     });
 
     Router::addGroup('/case', function (){
-        Router::get('/info', [CaseController::class, 'info']);
+        Router::get('/list', [CaseController::class, 'index']);
+        Router::get('/detail/{id}', [CaseController::class, 'detail']);
+    });
+
+    Router::addGroup('', function (){
+        Router::get('/address/info', [StaticPageController::class, 'addressInfo']);
+
+        Router::get('/about/info', [StaticPageController::class, 'aboutInfo']);
+
+        Router::get('/contact/info', [StaticPageController::class, 'contactInfo']);
     });
 
     Router::addGroup('/fave', function () {
