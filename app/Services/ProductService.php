@@ -64,9 +64,9 @@ class ProductService
         return ProductType::query()->get();
     }
 
-    public function all()
+    public function all($styleId)
     {
-        return Product::query()->get();
+        return Product::query()->where(['style_id' => $styleId])->get();
     }
 
     public function find(int $id)

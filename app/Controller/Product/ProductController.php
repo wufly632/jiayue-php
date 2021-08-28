@@ -38,7 +38,8 @@ class ProductController extends AbstractController
 
     public function index()
     {
-        $products = $this->service->all();
+        $styleId = $this->request->input('styleId');
+        $products = $this->service->all($styleId);
         $data = [];
 
         // 获取所有产品类别
