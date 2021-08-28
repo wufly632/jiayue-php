@@ -15,6 +15,7 @@ namespace App\Services;
 use App\Model\Product;
 use App\Model\ProductSize;
 use App\Model\ProductType;
+use App\Model\UserFave;
 use App\Request\ProductRequest;
 use Carbon\Carbon;
 use Hyperf\DbConnection\Db;
@@ -76,6 +77,6 @@ class ProductService
 
     public function hasFollowed($userId, $productId)
     {
-        return false; // TODO
+        return UserFave::query()->where(['user_id' => $userId, 'product_id' => $productId])->exists();
     }
 }
