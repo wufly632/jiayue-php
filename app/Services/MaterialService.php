@@ -8,8 +8,8 @@ use App\Model\Material;
 
 class MaterialService
 {
-    public function paginate()
+    public function paginate($pageSize)
     {
-        return Material::query()->paginate();
+        return Material::query()->paginate($pageSize);
     }
 }

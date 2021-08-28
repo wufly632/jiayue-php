@@ -54,9 +54,9 @@ class ProductService
         return false;
     }
 
-    public function paginate()
+    public function paginate($pageSize = 20)
     {
-        return Product::query()->paginate();
+        return Product::query()->paginate($pageSize);
     }
 
     public function getAllTypes()

@@ -63,7 +63,8 @@ class ProductController extends AbstractController
 
     public function list()
     {
-        $res = $this->service->paginate();
+        $pageSize = (int)$this->request->input('pageSize', 20);
+        $res = $this->service->paginate($pageSize);
         $products = [];
         $total = $res->total();
 
@@ -97,7 +98,7 @@ class ProductController extends AbstractController
             'productModel' => $productInfo->product_model,
             'pictures' => json_decode($productInfo->pictures),
             'detailPictures' => json_decode($productInfo->detail_pictures),
-            'materialChangeAble' => (bool) $productInfo->material_change_able,
+            'materialChangeAble' => (bool)$productInfo->material_change_able,
             'hasFollowed' => false,
         ];
         if (auth()->id()) {

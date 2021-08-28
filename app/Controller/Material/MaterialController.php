@@ -18,7 +18,8 @@ class MaterialController extends AbstractController
 
     public function index()
     {
-        $res = $this->service->paginate();
+        $pageSize = (int)$this->request->input('pageSize', 20);
+        $res = $this->service->paginate($pageSize);
         $total = $res->total() ?? 0;
         $data = [];
         foreach ($res->items() as $datum) {

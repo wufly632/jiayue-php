@@ -20,7 +20,7 @@ class ServingController extends AbstractController
 
     public function index(RequestInterface $request)
     {
-        $res = $this->service->paginate($request->input('type'));
+        $res = $this->service->paginate($request);
         $total = $res->total() ?? 0;
         $data = [];
         foreach ($res->items() as $datum) {

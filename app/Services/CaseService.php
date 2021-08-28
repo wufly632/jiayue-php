@@ -15,7 +15,8 @@ class CaseService
 {
     public function paginate(RequestInterface $request)
     {
-        return ProductCase::query()->paginate();
+        $pageSize = (int) $request->input('pageSize', 20);
+        return ProductCase::query()->paginate($pageSize);
     }
 
     public function find($id)

@@ -10,9 +10,9 @@ use Hyperf\Utils\Arr;
 
 class AppearanceService
 {
-    public function paginate()
+    public function paginate($pageSize)
     {
-        return Appearance::query()->paginate();
+        return Appearance::query()->paginate($pageSize);
     }
 
     public function find(int $id)

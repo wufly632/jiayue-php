@@ -9,9 +9,9 @@ use App\Request\NewsRequest;
 
 class NewsService
 {
-    public function paginate()
+    public function paginate($pageSize)
     {
-        return News::query()->paginate();
+        return News::query()->paginate($pageSize);
     }
 
     public function find(int $id)
