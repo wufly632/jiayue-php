@@ -4,11 +4,13 @@
 namespace App\Controller\Fave;
 
 
+use App\Common\Api\Status;
 use App\Controller\AbstractController;
 use App\Services\FaveService;
 use App\Services\ProductService;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
+use stdClass;
 
 class FaveController extends AbstractController
 {
@@ -46,6 +48,50 @@ class FaveController extends AbstractController
 
     public function fave(RequestInterface $request)
     {
+        $productId = $request->input('productId');
+        if (!$productId) {
+            return $this->response->apiError(new Status(Status::ERR_PARAM_VALIDAE));
+        }
+        $res = $this->service->fave(auth()->id(),$productId);
+        if ($res) {
+            return $this->response->apiSuccess();
+        }
+        return $this->response->apiError(new Status(Status::ERR_SYS));
+    }
 
+    public function list()
+    {
+        if(! auth()->id()) {
+           return $this->response->apiSuccess();
+        }
+        $faves = $this->service->getByUserId(auth()->id(), $this->request->input('pageSize', 20));
+
+        $data = [];
+
+        // 获取所有产品类别
+        $types = $this->productService->getAllTypes();
+        foreach ($types as $type) {
+            $data[$type->id] = [];
+            $data[$type->id]['name'] = $type->name;
+            $data[$type->id]['total'] = 0;
+            $data[$type->id]['products'] = [];
+        }
+        foreach ($faves as $fave) {
+            $datum = $fave->product;
+            ++$data[$datum->product_type_id]['total'];
+            $data[$datum->product_type_id]['products'][] = [
+                'id' => $datum->id,
+                'name' => $datum->title,
+                'productModel' => $datum->product_model,
+                'mainPicture' => $datum->main_picture,
+            ];
+        }
+        $data = collect($data)->filter(function ($item) {
+            return $item['total'] > 0;
+        });
+        if (count($data) == 0 ){
+            $data = new stdClass();
+        }
+        return $this->response->apiSuccess($data);
     }
 }

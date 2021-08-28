@@ -20,7 +20,6 @@ class FaveService
             foreach ($createdAt as $item) {
                 $dateRange[] = Carbon::parse($item)->addHours(8)->toDateTimeString();
             }
-            var_dump($dateRange);
             $userFave = $userFave->whereBetween('created_at', $dateRange);
         }
         if ($productId = $request->input('productId')) {
@@ -32,5 +31,19 @@ class FaveService
         }
         $pageSize = (int)$request->input('pageSize', 20);
         return $userFave->paginate($pageSize);
+    }
+
+    public function getByUserId($userId, $pageSize)
+    {
+        return UserFave::query()->where('user_id', $userId)->get();
+    }
+
+    public function fave($userId, $productId)
+    {
+        $userFave = UserFave::query()->where(['user_id' => $userId, 'product_id' => $productId])->first();
+        if ($userFave) {
+            return $userFave->delete();
+        }
+        return UserFave::query()->insert(['user_id' => $userId, 'product_id' => $productId,'created_at' => Carbon::now()->toDateTimeString(),'updated_at' => Carbon::now()->toDateTimeString()]);
     }
 }

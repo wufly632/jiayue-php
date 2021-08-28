@@ -7,7 +7,9 @@ namespace App\Exception\Handler;
 use App\Common\Api\Response;
 use App\Common\Api\Status;
 use Hyperf\HttpMessage\Stream\SwooleStream;
+use PhpParser\PrettyPrinter\Standard;
 use Psr\Http\Message\ResponseInterface;
+use stdClass;
 use Throwable;
 
 class ValidationExceptionHandler extends \Hyperf\Validation\ValidationExceptionHandler
@@ -16,7 +18,8 @@ class ValidationExceptionHandler extends \Hyperf\Validation\ValidationExceptionH
     {
         $this->stopPropagation();
         /** @var \Hyperf\Validation\ValidationException $throwable */
-        $body = $throwable->validator->errors()->first();
+        $body = new stdClass();
+        $body->message = $throwable->validator->errors()->first();
         if (! $response->hasHeader('content-type')) {
             $response = $response->withAddedHeader('content-type', 'text/json; charset=utf-8');
         }

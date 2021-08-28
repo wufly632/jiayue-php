@@ -9,6 +9,7 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 namespace App\Controller\User;
 
 use App\Common\Api\Status;
@@ -36,7 +37,7 @@ class UserController extends AbstractController
     {
         $credentials = $this->request->inputs(['mobile', 'password']);
         if (!$token = auth()->attempt($credentials)) {
-            return $this->response->apiError(new Status(Status::UNAUTHORIZED,'login failed'));
+            return $this->response->apiError(new Status(Status::UNAUTHORIZED, 'login failed'));
         }
         return $this->response->apiSuccess([
             'accessToken' => $token,
@@ -48,16 +49,21 @@ class UserController extends AbstractController
     public function register(RegisterRequest $request)
     {
         $userData = $request->all();
-        $this->service->registerUser($userData);
+        $user = $this->service->registerUser($userData);
 
-        return $this->response->apiSuccess();
+        $token = auth()->login($user);
+        return $this->response->apiSuccess([
+                'accessToken' => $token,
+                'tokenType' => 'bearer',
+                'expireIn' => make(JwtFactoryInterface::class)->make()->getPayloadFactory()->getTtl()
+            ]
+        );
     }
 
     public function info()
     {
         return $this->response->apiSuccess(auth()->user());
     }
-
 
 
 }

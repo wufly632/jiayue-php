@@ -53,7 +53,7 @@ Router::addGroup('/api', function (){
     Router::addGroup('/product', function () {
         Router::get('/style', [StyleController::class, 'index']);
         Router::get('/list', [ProductController::class, 'index']);
-        Router::get('/detail/{id}', [ProductController::class, 'detail']);
+        Router::get('/detail/{id:\d+}', [ProductController::class, 'detail']);
 
         Router::get('/types', [TypesController::class, 'index']);
         Router::post('/types/save', [TypesController::class, 'save']);
@@ -88,8 +88,8 @@ Router::addGroup('/api', function (){
 
     Router::addGroup('/fave', function () {
         Router::get('/list', [FaveController::class, 'list']);
-        Router::get('/fave', [FaveController::class, 'fave']);
-    },['middleware' => [RefreshTokenMiddleware::class]]);
+        Router::post('/save', [FaveController::class, 'fave'],['middleware' => [RefreshTokenMiddleware::class]]);
+    });
 });
 
 
