@@ -24,14 +24,15 @@ class StaticPageController extends AbstractController
     public function addressInfo()
     {
         $content = $this->service->findByType(self::ADDRESS_TYPE);
-        return $this->response->apiSuccess(compact('content'));
+        $address = json_decode($content);
+        return $this->response->apiSuccess(compact('address'));
     }
 
     public function addressSave(RequestInterface $request)
     {
-        $content = $request->input('content', '');
+        $address = $request->input('address', []);
         $type = self::ADDRESS_TYPE;
-        $res = $this->service->save($type, $content);
+        $res = $this->service->save($type, json_encode($address));
         if ($res) {
             return $this->response->apiSuccess();
         }
