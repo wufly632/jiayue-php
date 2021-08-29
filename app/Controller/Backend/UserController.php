@@ -15,7 +15,7 @@ class UserController extends AbstractController
     public function login()
     {
         $credentials = $this->request->inputs(['mobile', 'password']);
-        var_dump(Hash::getDriver('bcrypt')->make('admin123'));
+        var_dump((new BcryptDriver())->make($credentials['password']));
         if (!$token = auth()->attempt($credentials)) {
             return $this->response->apiError(new Status(Status::ERR_AUTH,'login failed'));
         }
