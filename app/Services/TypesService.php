@@ -10,9 +10,13 @@ use App\Model\Style;
 class TypesService
 {
 
-    public function all()
+    public function all($status)
     {
-        return ProductType::query()->get();
+        $model = ProductType::query();
+        if ($status) {
+            $model = $model->where('status', $status);
+        }
+        return $model->get();
     }
 
     public function saveTypeInfo(\App\Request\TypesRequest $request)

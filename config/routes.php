@@ -21,9 +21,11 @@ use App\Controller\Product\StyleController;
 use App\Controller\Product\TypesController;
 use App\Controller\Serving\ServingController;
 use App\Controller\StaticPage\StaticPageController;
+use App\Controller\UEditor\UEditorController;
 use App\Controller\User\UserController;
 use App\Controller\WechatController;
 use App\Middleware\RefreshTokenMiddleware;
+use FastRoute\Route;
 use Hyperf\HttpServer\Router\Router;
 use App\Controller\Backend\UserController as BackendUserController;
 

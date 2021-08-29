@@ -13,6 +13,8 @@
   "license": "Apache-2.0",
   "require": {
     "php": ">=7.3",
+    "easyswoole/easyswoole": "3.4.x",
+    "easyswoole/u-editor": "^1.0",
     "hyperf-ext/auth": "^2.2",
     "hyperf-ext/jwt": "^2.2",
     "hyperf/async-queue": "~2.2.0",
