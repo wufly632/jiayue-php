@@ -25,7 +25,7 @@ class RegisterRequest extends FormRequest
         return [
             'mobile'=>'required|unique:users,mobile',
             'password'=>'required',
-            'confirmPassword'=>'required|same:password',
+//            'confirmPassword'=>'required|same:password',
         ];
     }
 }
