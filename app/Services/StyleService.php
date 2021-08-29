@@ -9,9 +9,13 @@ use App\Model\Style;
 class StyleService
 {
 
-    public function all()
+    public function all($status)
     {
-        return Style::query()->get();
+        $model = Style::query();
+        if ($status) {
+            $model = $model->where('status', $status);
+        }
+        return $model->get();
     }
 
     public function saveStyleInfo(\App\Request\StyleRequest $request)

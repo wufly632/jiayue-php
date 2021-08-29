@@ -22,7 +22,8 @@ class StyleController extends AbstractController
     public function index()
     {
         $styles = [];
-        $res = $this->service->all();
+        $status = $this->request->getPathInfo() === '/api/product/style' ? 1 : 0;
+        $res = $this->service->all($status);
         foreach ($res as $re) {
             $styles[] = [
                 'id' => $re->id,
