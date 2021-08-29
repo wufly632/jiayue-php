@@ -23,7 +23,7 @@ class TypesController extends AbstractController
     public function index()
     {
         $types = [];
-        $status = $this->request->getPathInfo() === '/api/product/type' ? 1 : 0;
+        $status = $this->request->getPathInfo() === '/api/product/types' ? 1 : 0;
         $res = $this->service->all($status);
         foreach ($res as $re) {
             $types[] = [
