@@ -11,14 +11,14 @@ class FileController extends AbstractController
 {
     public function pictureUpload(\Hyperf\Filesystem\FilesystemFactory $factory)
     {
-        $fileStorage = $factory->get('local');
+        $fileStorage = $factory->get('oss');
 
         $file = $this->request->file('file');
         $extension = strtolower($file->getExtension()) ?: 'png';
-        $filename = time() . '_' . Str::random(10) . '.' . $extension;
+        $filename = 'jiayue/'.time() . '_' . Str::random(10) . '.' . $extension;
         // Write Files
         $fileStorage->write($filename, file_get_contents($file->getRealPath()));
-        $url = 'http://localhost:'.env('SERVER_HTTP_PORT').'/' . $filename;
+        $url = sprintf("https://wufly.oss-cn-hangzhou.aliyuncs.com/%s",$filename);
         return $this->response->apiSuccess(['url' => $url]);
     }
 }
