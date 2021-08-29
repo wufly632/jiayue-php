@@ -15,7 +15,7 @@ class Status
      */
     const SUCCESS = '20000|Success';
 
-    const UNAUTHORIZED = '40100|Unauthorized';
+    const UNAUTHORIZED = '40001|Unauthorized';
     const UNFOUND = '40400|Unfound';
 
     /**
