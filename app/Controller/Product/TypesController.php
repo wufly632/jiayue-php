@@ -31,6 +31,7 @@ class TypesController extends AbstractController
                 'name' => $re->name,
                 'enName' => $re->en_name,
                 'status' => $re->status,
+                'sort' => $re->sort,
             ];
         }
         return $this->response->apiSuccess(compact('types'));

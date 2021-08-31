@@ -25,6 +25,7 @@ class TypesService
         $styleInfo = [
             'name' => $request->input('name'),
             'en_name' => $request->input('enName'),
+            'sort' => $request->input('sort', 99),
         ];
         return ProductType::query()->updateOrCreate(['id' => $id], $styleInfo);
     }
