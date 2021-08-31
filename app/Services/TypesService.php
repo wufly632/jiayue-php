@@ -16,7 +16,7 @@ class TypesService
         if ($status) {
             $model = $model->where('status', $status);
         }
-        return $model->orderByDesc('sort')->get();
+        return $model->orderBy('sort')->get();
     }
 
     public function saveTypeInfo(\App\Request\TypesRequest $request)
