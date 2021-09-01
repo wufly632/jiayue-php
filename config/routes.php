@@ -148,4 +148,8 @@ Router::addGroup('/api/backend', function (){
         Router::post('/contact/save', [StaticPageController::class, 'contactSave']);
     });
 
+    Router::addGroup('/wechat', function () {
+        Router::get('/shareUrl', [WechatController::class, 'shareUrl']);
+    });
+
 },['middleware' => [RefreshTokenMiddleware::class]]);
