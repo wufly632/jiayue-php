@@ -41,7 +41,7 @@ class WechatController extends AbstractController
         $url = $request->input('url'); // 当前页面url传过来
         $app = EasyWechat::officialAccount();
         $app->jssdk->setUrl($url);
-        $APIs = ['updateAppMessageShareData', 'updateTimelineShareData'];
+        $APIs = ['updateAppMessageShareData', 'updateTimelineShareData', "onMenuShareTimeline", "onMenuShareAppMessage",];
         $data = $app->jssdk->buildConfig($APIs, $debug = true, $beta = false, $json = false);
 
         return $this->response->apiSuccess([
