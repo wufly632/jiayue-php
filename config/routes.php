@@ -96,6 +96,9 @@ Router::addGroup('/api', function (){
 
 
 Router::post('/api/backend/login',[BackendUserController::class,'login']);
+Router::addGroup('/api/product/wechat', function () {
+    Router::get('/shareUrl', [WechatController::class, 'shareUrl']);
+});
 Router::addGroup('/api/backend', function (){
 
     Router::post('/picture/upload', [FileController::class, 'pictureUpload']);
@@ -148,8 +151,6 @@ Router::addGroup('/api/backend', function (){
         Router::post('/contact/save', [StaticPageController::class, 'contactSave']);
     });
 
-    Router::addGroup('/wechat', function () {
-        Router::get('/shareUrl', [WechatController::class, 'shareUrl']);
-    });
+
 
 },['middleware' => [RefreshTokenMiddleware::class]]);
