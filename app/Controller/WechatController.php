@@ -3,9 +3,12 @@
 
 namespace App\Controller;
 
+use EasyWeChat\BasicService\Application;
+use EasyWeChat\Factory;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Naixiaoxin\HyperfWechat\EasyWechat;
 use Naixiaoxin\HyperfWechat\Helper;
+
 
 class WechatController extends AbstractController
 {
@@ -47,5 +50,15 @@ class WechatController extends AbstractController
         return $this->response->apiSuccess([
             'config' => $data,
         ]);
+    }
+
+    public function login(RequestInterface $request)
+    {
+        $app = EasyWechat::officialAccount();
+        $code = $request->input('code');
+
+        $user = $app->oauth->getAccessToken($code);
+
+        $this->response->apiSuccess($user);
     }
 }
