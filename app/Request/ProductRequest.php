@@ -27,7 +27,7 @@ class ProductRequest extends FormRequest
             'typeId' => 'required',
             'productModel' => 'required',
             'pictures' => 'required|array',
-            'detailPictures' => 'required|array',
+//            'detailPictures' => 'required|array',
         ];
     }
 
