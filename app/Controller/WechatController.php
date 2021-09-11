@@ -3,15 +3,31 @@
 
 namespace App\Controller;
 
+use App\Common\Api\Status;
+use App\Model\User;
+use App\Model\WechatUser;
 use EasyWeChat\BasicService\Application;
 use EasyWeChat\Factory;
+use Hyperf\DbConnection\Db;
+use Hyperf\Guzzle\ClientFactory;
 use Hyperf\HttpServer\Contract\RequestInterface;
+use HyperfExt\Jwt\Contracts\JwtFactoryInterface;
 use Naixiaoxin\HyperfWechat\EasyWechat;
 use Naixiaoxin\HyperfWechat\Helper;
 
 
 class WechatController extends AbstractController
 {
+    /**
+     * @var \Hyperf\Guzzle\ClientFactory
+     */
+    private $clientFactory;
+
+    public function __construct(ClientFactory $clientFactory)
+    {
+        $this->clientFactory = $clientFactory;
+    }
+
     public function test()
     {
 
@@ -54,11 +70,54 @@ class WechatController extends AbstractController
 
     public function login(RequestInterface $request)
     {
-        $app = EasyWechat::officialAccount();
         $code = $request->input('code');
 
-        $user = $app->oauth->getAccessToken($code);
+        if (!$code) {
+            return $this->response->apiError(new Status(Status::ERR_AUTH));
+        }
+        try {
 
-        $this->response->apiSuccess($user);
+            // $options 等同于 GuzzleHttp\Client 构造函数的 $config 参数
+            $options = [];
+            // $client 为协程化的 GuzzleHttp\Client 对象
+            $client = $this->clientFactory->create($options);
+            $data = $client->get('http://localhost:5555/wechat/code?code='.$code);
+            if ($data->getStatusCode() === 200) {
+                $res = json_decode($data->getBody()->getContents());
+                if ($res->code === 20000) {
+                    Db::beginTransaction();
+                    $openId = $res->data->openid;
+                    $wechatUser =  WechatUser::query()->where(['openid' => $openId])->first();
+                    if (!$wechatUser) {
+                        $user = User::create([
+                            'nickname' => $res->data->nickname,
+                        ]);
+                        $wechatUser = WechatUser::query()
+                            ->create([
+                                'openid' => $openId,
+                                'user_id' => $user->id,
+                                'nickname' => $res->data->nickname,
+                                'sex' => $res->data->sex,
+                            ]);
+                    } else {
+                        $user = $wechatUser->user;
+                    }
+                    Db::commit();
+                    $token = auth()->login($user);
+                    return $this->response->apiSuccess([
+                            'accessToken' => $token,
+                            'tokenType' => 'bearer',
+                            'expireIn' => make(JwtFactoryInterface::class)->make()->getPayloadFactory()->getTtl()
+                        ]
+                    );
+                }
+            }
+
+        } catch (\Exception $exception) {
+            Db::rollBack();
+            var_dump($exception->getMessage());
+//            $this->response->apiError(new Status(Status::ERR_AUTH));
+        }
+        return $this->response->apiError(new Status(Status::ERR_AUTH));
     }
 }
