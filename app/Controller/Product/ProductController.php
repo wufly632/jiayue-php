@@ -65,7 +65,9 @@ class ProductController extends AbstractController
     public function list()
     {
         $pageSize = (int)$this->request->input('pageSize', 20);
-        $res = $this->service->paginate($pageSize);
+        $styleId = $this->request->input('styleId');
+        $productTypeId = $this->request->input('productTypeId');
+        $res = $this->service->paginate($styleId, $productTypeId, $pageSize);
         $products = [];
         $total = $res->total();
 
