@@ -24,7 +24,7 @@ class TypesController extends AbstractController
     public function index()
     {
         // 获取所有商品的style
-        $typeIds = Product::query()->select('product_type_id')->groupBy('product_type_id')->get()->toArray();
+        $typeIds = Product::query()->select('product_type_id')->groupBy('product_type_id')->get()->pluck('product_type_id')->toArray();
         var_dump($typeIds);
 
         $types = [];
