@@ -60,7 +60,7 @@ class ProductController extends AbstractController
             ];
         }
         foreach ($data as $key => $datum) {
-            if ($datum->total == 0) {
+            if ($datum['total'] == 0) {
                 unset($data[$key]);
             }
         }
