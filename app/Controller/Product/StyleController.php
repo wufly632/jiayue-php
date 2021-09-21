@@ -24,7 +24,7 @@ class StyleController extends AbstractController
     {
         $styles = [];
         // 获取所有商品的style
-        $typeIds = Product::query()->pluck('product_type_id')->unique()->toArray();
+        $typeIds = Product::query()->select('product_type_id')->groupBy('product_type_id')->toArray();
         $status = $this->request->getPathInfo() === '/api/product/style' ? 1 : 0;
         $res = $this->service->all($status);
         foreach ($res as $re) {
