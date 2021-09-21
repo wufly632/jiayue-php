@@ -18,6 +18,7 @@ use App\Request\ProductRequest;
 use App\Services\ProductService;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
+use function Couchbase\defaultDecoder;
 
 class ProductController extends AbstractController
 {

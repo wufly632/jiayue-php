@@ -6,6 +6,7 @@ namespace App\Controller\Product;
 
 use App\Common\Api\Status;
 use App\Controller\AbstractController;
+use App\Model\Product;
 use App\Request\StyleOnOfflineRequest;
 use App\Request\StyleRequest;
 use App\Services\StyleService;
@@ -22,17 +23,22 @@ class StyleController extends AbstractController
     public function index()
     {
         $styles = [];
+        // 获取所有商品的style
+        $styleIds = Product::query()->pluck('style_id')->unique()->toArray();
         $status = $this->request->getPathInfo() === '/api/product/style' ? 1 : 0;
         $res = $this->service->all($status);
         foreach ($res as $re) {
-            $styles[] = [
-                'id' => $re->id,
-                'name' => $re->name,
-                'smallPicture' => $re->small_picture,
-                'bigPicture' => $re->big_picture,
-                'status' => $re->status,
-            ];
+            if (in_array($re->id, $styleIds)) {
+                $styles[] = [
+                    'id' => $re->id,
+                    'name' => $re->name,
+                    'smallPicture' => $re->small_picture,
+                    'bigPicture' => $re->big_picture,
+                    'status' => $re->status,
+                ];
+            }
         }
+
         return $this->response->apiSuccess(compact('styles'));
     }
 
