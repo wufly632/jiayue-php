@@ -59,6 +59,11 @@ class ProductController extends AbstractController
                 'mainPicture' => $datum->main_picture,
             ];
         }
+        foreach ($data as $key => $datum) {
+            if ($datum->total == 0) {
+                unset($data[$key]);
+            }
+        }
         return $this->response->apiSuccess($data);
     }
 
