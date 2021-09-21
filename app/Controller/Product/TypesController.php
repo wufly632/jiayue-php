@@ -6,6 +6,7 @@ namespace App\Controller\Product;
 
 use App\Common\Api\Status;
 use App\Controller\AbstractController;
+use App\Model\Product;
 use App\Request\StyleRequest;
 use App\Request\TypesOnOfflineRequest;
 use App\Request\TypesRequest;
@@ -22,17 +23,22 @@ class TypesController extends AbstractController
 
     public function index()
     {
+        // 获取所有商品的style
+        $typeIds = Product::query()->select('product_type_id')->groupBy('product_type_id')->toArray();
+
         $types = [];
         $status = $this->request->getPathInfo() === '/api/product/types' ? 1 : 0;
         $res = $this->service->all($status);
         foreach ($res as $re) {
-            $types[] = [
-                'id' => $re->id,
-                'name' => $re->name,
-                'enName' => $re->en_name,
-                'status' => $re->status,
-                'sort' => $re->sort,
-            ];
+            if (in_array($re->id, $typeIds)) {
+                $types[] = [
+                    'id' => $re->id,
+                    'name' => $re->name,
+                    'enName' => $re->en_name,
+                    'status' => $re->status,
+                    'sort' => $re->sort,
+                ];
+            }
         }
         return $this->response->apiSuccess(compact('types'));
     }

@@ -23,12 +23,10 @@ class StyleController extends AbstractController
     public function index()
     {
         $styles = [];
-        // 获取所有商品的style
-        $typeIds = Product::query()->select('product_type_id')->groupBy('product_type_id')->toArray();
-        $status = $this->request->getPathInfo() === '/api/product/style' ? 1 : 0;
+       $status = $this->request->getPathInfo() === '/api/product/style' ? 1 : 0;
         $res = $this->service->all($status);
         foreach ($res as $re) {
-            if (in_array($re->id, $typeIds)) {
+
                 $styles[] = [
                     'id' => $re->id,
                     'name' => $re->name,
@@ -36,7 +34,6 @@ class StyleController extends AbstractController
                     'bigPicture' => $re->big_picture,
                     'status' => $re->status,
                 ];
-            }
         }
 
         return $this->response->apiSuccess(compact('styles'));
