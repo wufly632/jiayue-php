@@ -24,11 +24,11 @@ class StyleController extends AbstractController
     {
         $styles = [];
         // 获取所有商品的style
-        $styleIds = Product::query()->pluck('style_id')->unique()->toArray();
+        $typeIds = Product::query()->pluck('product_type_id')->unique()->toArray();
         $status = $this->request->getPathInfo() === '/api/product/style' ? 1 : 0;
         $res = $this->service->all($status);
         foreach ($res as $re) {
-            if (in_array($re->id, $styleIds)) {
+            if (in_array($re->id, $typeIds)) {
                 $styles[] = [
                     'id' => $re->id,
                     'name' => $re->name,
