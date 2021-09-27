@@ -78,6 +78,9 @@ class FaveController extends AbstractController
         }
         foreach ($faves as $fave) {
             $datum = $fave->product;
+            if (!isset($data[$datum->product_type_id])) {
+                continue;
+            }
             ++$data[$datum->product_type_id]['total'];
             $data[$datum->product_type_id]['products'][] = [
                 'id' => $datum->id,

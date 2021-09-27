@@ -52,6 +52,9 @@ class ProductController extends AbstractController
             $data[$type->id]['products'] = [];
         }
         foreach ($products as $datum) {
+            if (!isset($data[$datum->product_type_id])) {
+                continue;
+            }
             ++$data[$datum->product_type_id]['total'];
             $data[$datum->product_type_id]['products'][] = [
                 'id' => $datum->id,

@@ -69,7 +69,7 @@ class ProductService
 
     public function getAllTypes()
     {
-        return ProductType::query()->get();
+        return ProductType::query()->where('status', 1)->get();
     }
 
     public function all($styleId)
