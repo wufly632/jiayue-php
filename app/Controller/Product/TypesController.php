@@ -30,7 +30,7 @@ class TypesController extends AbstractController
         $status = $this->request->getPathInfo() === '/api/product/types' ? 1 : 0;
         $res = $this->service->all($status);
         foreach ($res as $re) {
-            if (in_array($re->id, $typeIds)) {
+            if (in_array($re->id, $typeIds) || !$status) {
                 $types[] = [
                     'id' => $re->id,
                     'name' => $re->name,
