@@ -71,6 +71,7 @@ class WechatController extends AbstractController
     public function login(RequestInterface $request)
     {
         $code = $request->input('code');
+        $state = $request->input('state');
 
         if (!$code) {
             return $this->response->apiError(new Status(Status::ERR_AUTH));
@@ -81,7 +82,7 @@ class WechatController extends AbstractController
             $options = [];
             // $client 为协程化的 GuzzleHttp\Client 对象
             $client = $this->clientFactory->create($options);
-            $data = $client->get('http://localhost:5555/wechat/code?code='.$code);
+            $data = $client->get('http://localhost:5555/wechat/code?code='.$code.'&state='.$state);
             if ($data->getStatusCode() === 200) {
                 $res = json_decode($data->getBody()->getContents());
                 if ($res->code === 20000) {
@@ -115,8 +116,8 @@ class WechatController extends AbstractController
 
         } catch (\Exception $exception) {
             Db::rollBack();
-            var_dump($exception->getMessage());
-//            $this->response->apiError(new Status(Status::ERR_AUTH));
+//            var_dump($exception->getMessage());
+            $this->response->apiError(new Status(Status::ERR_AUTH));
         }
         return $this->response->apiError(new Status(Status::ERR_AUTH));
     }
